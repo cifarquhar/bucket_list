@@ -18,10 +18,8 @@ var app = function(){
       countryDetailView.render(countries[this.value])
     })
     button.addEventListener('click', function(){
-      // console.log(countryListView.selectElement.value)
       var newIndex = countryListView.selectElement.value
       var newCountry = countries[newIndex]
-      // console.log(newCountry)
       countryList.addData(newCountry,function(){
         databaseListView.makeRequest(function(){
             var countries = JSON.parse(this.responseText)

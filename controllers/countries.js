@@ -19,9 +19,11 @@ countryRouter.get("/:id",function(req,res){
 })
 
 countryRouter.post("/",function(req,res){
+  console.log(req.body)
   var countryToAdd = {
     name: req.body.name
   }
+  console.log(countryToAdd.name)
   countryQuery.add(countryToAdd,function(docs){
     res.json(docs)
   })

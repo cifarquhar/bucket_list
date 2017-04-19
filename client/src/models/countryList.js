@@ -17,15 +17,20 @@ CountryList.prototype = {
     request.send()
   },
 
-  addData: function(){
+  addData: function(newCountry,callback){
     var request = new XMLHttpRequest()
-    request.open("POST","localhost:3000/api/countries")
-    // request.onload = function(){
-    //   if (request.status === 200){
 
-    //   }
-    // }
-    request.send()
+    console.log(request)
+    var payload = newCountry
+    console.log(payload)
+    request.open("POST","http://localhost:3000/api/countries")
+    request.setRequestHeader("Content-Type", "application/json")
+    request.onload = callback
+    
+    request.send(JSON.stringify(payload))
+
+
+
   }
 }
 

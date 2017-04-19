@@ -17,18 +17,23 @@ var app = function(){
     countryListView.selectElement.addEventListener('change', function(){
       countryDetailView.render(countries[this.value])
     })
-    // button.addEventListener('click', function(){
-    //   // console.log(this)
-    //   // console.log(countryList.countries[0])
-    //   // console.log(countries[this.value])
-    //   countries[this.value].addData()
-    // })
+    button.addEventListener('click', function(){
+      // console.log(countryListView.selectElement.value)
+      var newIndex = countryListView.selectElement.value
+      var newCountry = countries[newIndex]
+      // console.log(newCountry)
+      countryList.addData(newCountry,function(){
+        databaseListView.makeRequest(function(){
+            var countries = JSON.parse(this.responseText)
+            databaseListView.render(countries)
+          })
+      })
+    })
   })
 
   databaseListView.makeRequest(function(){
     var countries = JSON.parse(this.responseText)
     databaseListView.render(countries)
-    console.log(countries)
   })
   
 

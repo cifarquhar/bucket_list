@@ -12,4 +12,10 @@ countryRouter.get("/",function(req,res){
   })
 })
 
+countryRouter.get("/:id",function(req,res){
+  countryQuery.show(req.params.id, function(docs){
+    res.json(docs)
+  })
+})
+
 module.exports = countryRouter

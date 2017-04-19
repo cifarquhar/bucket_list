@@ -72,17 +72,19 @@
 
 var CountryList = __webpack_require__(1)
 var CountryListView = __webpack_require__(2)
+var CountryDetailView = __webpack_require__(3)
 
 var app = function(){
 
   var countryList = new CountryList("https://restcountries.eu/rest/v2/all")
   var countryListView = new CountryListView(document.querySelector('#country-selector'))
-
-  console.log(countryList)
+  var countryDetailView = new CountryDetailView()
 
   countryList.getData(function(countries){
-    console.log(countries)
     countryListView.render(countries)
+    countryListView.selectElement.addEventListener('change', function(){
+      countryDetailView.render(countries[this.value])
+    })
   })
 
 }
@@ -126,7 +128,6 @@ var CountryListView = function(selectElement){
 CountryListView.prototype = {
 
   render: function(countries){
-    console.log(this.selectElement)
     countries.forEach(function(country, index){
       var optionElement = document.createElement('option')
       optionElement.value = index
@@ -138,6 +139,28 @@ CountryListView.prototype = {
 }
 
 module.exports = CountryListView;
+
+/***/ },
+/* 3 */
+/***/ function(module, exports) {
+
+var CountryDetailView = function(){
+}
+
+CountryDetailView.prototype = {
+
+  render: function(country){
+    var nameTag = document.querySelector('#name')
+    nameTag.innerText = country.name
+    var capitalCityTag = document.querySelector('#capital-city')
+    capitalCityTag.innerText = country.capital
+    var populationTag = document.querySelector('#population')
+    populationTag.innerText = country.population
+  }
+
+}
+
+module.exports = CountryDetailView;
 
 /***/ }
 /******/ ]);

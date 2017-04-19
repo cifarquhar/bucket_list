@@ -5,7 +5,6 @@ var CountryListView = function(selectElement){
 CountryListView.prototype = {
 
   render: function(countries){
-    console.log(this.selectElement)
     countries.forEach(function(country, index){
       var optionElement = document.createElement('option')
       optionElement.value = index

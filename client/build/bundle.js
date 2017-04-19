@@ -99,7 +99,9 @@ var app = function(){
   })
 
   databaseListView.makeRequest(function(){
-    databaseListView.render()
+    var countries = JSON.parse(this.responseText)
+    databaseListView.render(countries)
+    console.log(countries)
   })
   
 
@@ -211,12 +213,12 @@ DatabaseListView.prototype = {
     request.send()
   },
 
-  render: function(){
-    this.countries.forEach(function(country){
+  render: function(countries){
+    countries.forEach(function(country){
       var li = document.createElement('li')
       li.innerText = country.name
       this.listElement.appendChild(li)
-    })
+    }.bind(this))
   }
 
 }

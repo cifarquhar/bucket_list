@@ -26,7 +26,9 @@ var app = function(){
   })
 
   databaseListView.makeRequest(function(){
-    databaseListView.render()
+    var countries = JSON.parse(this.responseText)
+    databaseListView.render(countries)
+    console.log(countries)
   })
   
 

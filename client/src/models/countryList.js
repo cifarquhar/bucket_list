@@ -15,6 +15,17 @@ CountryList.prototype = {
       }
     }.bind(this)
     request.send()
+  },
+
+  addData: function(){
+    var request = new XMLHttpRequest()
+    request.open("POST","localhost:3000/api/countries")
+    // request.onload = function(){
+    //   if (request.status === 200){
+
+    //   }
+    // }
+    request.send()
   }
 }
 

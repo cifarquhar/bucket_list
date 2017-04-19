@@ -66,33 +66,50 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ function(module, exports, __webpack_require__) {
 
 var CountryList = __webpack_require__(1)
 var CountryListView = __webpack_require__(2)
 var CountryDetailView = __webpack_require__(3)
+var DatabaseListView = __webpack_require__(326)
 
 var app = function(){
 
   var countryList = new CountryList("https://restcountries.eu/rest/v2/all")
   var countryListView = new CountryListView(document.querySelector('#country-selector'))
   var countryDetailView = new CountryDetailView()
+  var button = document.querySelector('#button')
+  var databaseListView = new DatabaseListView(document.querySelector('#database-list'))
 
   countryList.getData(function(countries){
     countryListView.render(countries)
+    countryDetailView.render(countries[0])
     countryListView.selectElement.addEventListener('change', function(){
       countryDetailView.render(countries[this.value])
     })
+    // button.addEventListener('click', function(){
+    //   // console.log(this)
+    //   // console.log(countryList.countries[0])
+    //   // console.log(countries[this.value])
+    //   countries[this.value].addData()
+    // })
   })
+
+  databaseListView.makeRequest(function(){
+    databaseListView.render()
+  })
+  
 
 }
 
 window.onload = app
 
 /***/ },
-/* 1 */
+
+/***/ 1:
 /***/ function(module, exports) {
 
 var CountryList = function(url){
@@ -112,13 +129,25 @@ CountryList.prototype = {
       }
     }.bind(this)
     request.send()
+  },
+
+  addData: function(){
+    var request = new XMLHttpRequest()
+    request.open("POST","localhost:3000/api/countries")
+    // request.onload = function(){
+    //   if (request.status === 200){
+
+    //   }
+    // }
+    request.send()
   }
 }
 
 module.exports = CountryList;
 
 /***/ },
-/* 2 */
+
+/***/ 2:
 /***/ function(module, exports) {
 
 var CountryListView = function(selectElement){
@@ -141,7 +170,8 @@ CountryListView.prototype = {
 module.exports = CountryListView;
 
 /***/ },
-/* 3 */
+
+/***/ 3:
 /***/ function(module, exports) {
 
 var CountryDetailView = function(){
@@ -151,17 +181,49 @@ CountryDetailView.prototype = {
 
   render: function(country){
     var nameTag = document.querySelector('#name')
-    nameTag.innerText = country.name
+    nameTag.innerText = "Name: " + country.name
     var capitalCityTag = document.querySelector('#capital-city')
-    capitalCityTag.innerText = country.capital
+    capitalCityTag.innerText = "Capital City: " + country.capital
     var populationTag = document.querySelector('#population')
-    populationTag.innerText = country.population
+    populationTag.innerText = "Population: " + country.population
   }
 
 }
 
 module.exports = CountryDetailView;
 
+/***/ },
+
+/***/ 326:
+/***/ function(module, exports) {
+
+var DatabaseListView = function(listElement){
+  this.listElement = listElement
+  this.countries = []
+}
+
+DatabaseListView.prototype = {
+
+  makeRequest: function(callback){
+    var request = new XMLHttpRequest()
+    request.open("GET", "http://localhost:3000/api/countries")
+    request.onload = callback
+    request.send()
+  },
+
+  render: function(){
+    this.countries.forEach(function(country){
+      var li = document.createElement('li')
+      li.innerText = country.name
+      this.listElement.appendChild(li)
+    })
+  }
+
+}
+
+module.exports = DatabaseListView
+
 /***/ }
-/******/ ]);
+
+/******/ });
 //# sourceMappingURL=bundle.js.map

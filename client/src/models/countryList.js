@@ -17,3 +17,5 @@ CountryList.prototype = {
     request.send()
   }
 }
+
+module.exports = CountryList;

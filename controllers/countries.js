@@ -33,4 +33,11 @@ countryRouter.put("/:id",function(req,res){
     res.json(docs)
   })
 })
+
+countryRouter.delete("/:id",function(req,res){
+  countryQuery.delete(req.params.id,function(docs){
+    res.json(docs)
+  })
+})
+
 module.exports = countryRouter

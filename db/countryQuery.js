@@ -51,6 +51,18 @@ CountryQuery.prototype = {
         })
       }
     })
+  },
+
+  delete: function(id, onQueryFinished){
+    MongoClient.connect(this.url,function(err,db){
+      if(db){
+        var collection = db.collection("countries")
+        collection.deleteOne( { _id: ObjectID(id) } )
+        collection.find().toArray(function(err,docs){
+          onQueryFinished(docs)
+        })
+      }
+    })
   }
 
 }

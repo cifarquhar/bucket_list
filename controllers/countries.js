@@ -26,4 +26,11 @@ countryRouter.post("/",function(req,res){
     res.json(docs)
   })
 })
+
+countryRouter.put("/:id",function(req,res){
+  var newName = req.body.name
+  countryQuery.update(req.params.id,newName,function(docs){
+    res.json(docs)
+  })
+})
 module.exports = countryRouter

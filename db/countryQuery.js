@@ -27,6 +27,18 @@ CountryQuery.prototype = {
         })
       }
     })
+  },
+
+  add: function(countryToAdd,onQueryFinished){
+    MongoClient.connect(this.url,function(err,db){
+      if(db){
+        var collection = db.collection("countries")
+        collection.insert(countryToAdd)
+        collection.find().toArray(function(err,docs){
+          onQueryFinished(docs)
+        })
+        }
+      })
   }
 
 }
